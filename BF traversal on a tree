@@ -1,0 +1,14 @@
+data Tree a = Leaf a | Fork [Tree a]
+
+bfs :: Tree a -> [a]
+bfs (Leaf x) = [x]
+bfs (Fork []) = []
+bfs (Fork xs) = printLeaves (Fork xs) ++ (concatMap bfs [x | x<-xs , isLeaf x == False])
+
+isLeaf :: Tree a -> Bool
+isLeaf (Leaf x) = True
+isLeaf _ = False
+
+printLeaves :: Tree a -> [a]
+printLeaves (Leaf x) = [x]
+printLeaves (Fork xs) = concat [printLeaves x | x <- xs, isLeaf x]
